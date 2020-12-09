@@ -1,0 +1,31 @@
+package com.cj.baidunavi.ui;
+
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import com.cj.baidunavi.R;
+
+
+public class LibraryOverviewActivity extends AppCompatActivity
+{
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_library_overview);
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+
+        WebView myWebView = findViewById(R.id.id_webview);
+        WebSettings webSettings = myWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        myWebView.loadUrl("http://47.107.109.237/L_Overview.html");
+    }
+}

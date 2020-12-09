@@ -1,0 +1,113 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    signingConfigs {
+        release {
+            storeFile file(storage_path)
+            storePassword storage_pwd
+            keyAlias = sign_keyalias
+            keyPassword sign_pwd
+        }
+    }
+    flavorDimensions "default"
+    compileSdkVersion compileSdkVersion_value as int
+    buildToolsVersion buildToolVersion_value
+    defaultConfig {
+        applicationId master_applicationId
+        minSdkVersion minSdkVersion_value as int
+        targetSdkVersion targetSdkVersion_value as int
+        versionCode master_versioncode as int
+        versionName master_versionname
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    productFlavors {
+        master {
+            manifestPlaceholders = ["baidu_key": "${baidu_key}"]
+            dimension "default"
+            applicationId master_applicationId
+            versionCode master_versioncode as int
+            versionName master_versionname
+        }
+    }
+    lintOptions {
+        disable "GoogleAppIndexingWarning"
+    }
+
+    buildTypes {
+        debug {
+//            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation 'com.apkfuns.logutils:library:1.7.5'
+
+    //dagger
+    implementation 'com.google.dagger:dagger:2.25.2'
+    kapt 'com.google.dagger:dagger-compiler:2.25.2'
+
+    //lifecycle
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation files('libs/BaiduLBS_Android.jar')
+
+    implementation "com.orhanobut:hawk:2.0.1"
+    implementation project(path: ':openCVLibrary348')
+}
+
+android.applicationVariants.all {
+    variant ->
+        variant.outputs.all {
+            output ->
+//              variant.getPackageApplicationProvider().get().outputDirectory =
+//                      new File(apk_path)
+                def outputFile = variant.getPackageApplicationProvider().get().outputDirectory
+                if (outputFile != null) {
+                    def fileName =
+                            "${variant.productFlavors[0].name}" +
+//                            "-{package  ${variant.productFlavors[0].applicationId}}" +
+//                            "-{version_name  ${variant.productFlavors[0].versionName}}" +
+//                            "-{version_code  ${variant.productFlavors[0].versionCode}}" +
+//                            "-{time  ${new Date().format("yyyy-MM-dd hh:mm:ss")}}" +
+                                    "-${buildType.name}.apk"
+                    outputFileName = fileName
+                }
+        }
+}
+
+android.applicationVariants.all { variant ->
+    switch (variant.flavorName) {
+        case "master":
+            if ("debug" == variant.buildType.getName()) {
+                variant.resValue "string", "appName", "${master_appname}_debug"
+
+            } else {
+                variant.resValue "string", "appName", "${master_appname}"
+            }
+            break
+    }
+}

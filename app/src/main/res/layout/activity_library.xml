@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/id_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.LibraryActivity">
+
+    <LinearLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="209dp"
+                app:srcCompat="@drawable/im_library"/>
+
+        <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:text="图书馆简介"
+                android:textColor="#2196F3"
+                android:textSize="18sp" />
+
+        <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="重庆科技学院图书馆使用面积3.2万平方米，阅览座位4000余个。经过多年的发展，馆藏图书总量达363万余册，其中纸质图书191万余册，电子图书172万余册;拥有电子图书、电子期刊、学位论文、会议论文、视频教学、在线学习、检索工具、专题特色等各类数据库，总存储空间已达114T，已存储容量60余TB。近年来，每年新增图书5万册以上，馆藏文献以石油、化工、冶金、材料、机械、自动化、计算机、管理、建筑、人文学科为主，全面收集石油、冶金、安全专业文献资源，形成特色馆藏。我们始终坚持“读者第一，服务育人”的宗旨，推行藏借阅一体、开架借阅等超市化管理模式，实行统一门禁，设有总服务台，实现了读者带书包进馆可以随意进入各阅藏区。书刊阅览每周向读者开放98小时以上，网上资源服务全天开放，情报研究部还提供信息咨询、科技查新、检索指导等服务。"
+                android:textColor="@android:color/background_dark"
+                android:textSize="17sp" />
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/id_drawer"
+            android:layout_width="270dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#FFF"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:orientation="vertical" >
+
+        <!--抽屉菜单的布局放在XML里面 -->
+        <include layout="@layout/activity_library_drawer" />
+
+    </LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>
